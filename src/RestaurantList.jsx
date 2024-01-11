@@ -1,6 +1,16 @@
+// HomePage.jsx
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import {AppBar} from "@mui/material";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Card,
+  CardMedia,
+  CardContent,
+  Grid,
+  Container,
+} from "@mui/material";
 
 const HomePage = () => {
   const [restaurants, setRestaurants] = useState([]);
@@ -23,29 +33,48 @@ const HomePage = () => {
 
   return (
     <div>
-      
-      <AppBar sx={{height:"50px", color:'Window'}}>
-        <p style={{font:'bold', color:""}}>Pre Order From </p>
+      <AppBar position="static" sx={{ background: "white", boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)" }}>
+        <Toolbar>
+          <p style={{color:'grey'}}>Pre Order From </p>
+          {/* Add your location symbol or any other icons here */}
+          <span role="img" aria-label="Location">
+            📍
+          </span>
+          <p style={{color:'black'}}>Location</p>
+        </Toolbar>
       </AppBar>
 
-      <section>
-        <h2>List of Restaurants</h2>
-        <ul>
-          {restaurants.map((restaurant) => (
-            <li key={restaurant.restaurant_id}>
-              <Link to={`/restaurant/${restaurant.restaurant_id}`}>
-                <h3>{restaurant.restaurant_name}</h3>
-              </Link>
-              <p>Location: {restaurant.location?.location_address}</p>
-              <p>Average Cost for Two: {restaurant?.avg_cost_for_two}</p>
-              <img
-                src={restaurant.images[0]?.url}
-                alt={restaurant.restaurant_name}
-              />
-            </li>
-          ))}
-        </ul>
-      </section>
+      <Container>
+        <section>
+          <h2>Popular Ones</h2>
+          <Grid container spacing={2}>
+            {restaurants.map((restaurant) => (
+              <Grid key={restaurant.restaurant_id} item xs={12} sm={6} md={4}>
+                <Card sx={{ minHeight: "100%", display: "flex", flexDirection: "column" }}>
+                  <CardMedia
+                    component="img"
+                    height="140"
+                    image={restaurant.images[0]?.url}
+                    alt={restaurant.restaurant_name}
+                    sx={{ objectFit: "cover" }}
+                  />
+                  <CardContent sx={{ flexGrow: 1 }}>
+                    <Link to={`/restaurant/${restaurant.restaurant_id}`}>
+                      <Typography variant="h6">{restaurant.restaurant_name}</Typography>
+                    </Link>
+                    <Typography variant="body2" color="text.secondary">
+                      Location: {restaurant.location?.location_address}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Average Cost for Two: {restaurant?.avg_cost_for_two}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        </section>
+      </Container>
     </div>
   );
 };
