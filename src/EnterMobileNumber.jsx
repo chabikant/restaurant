@@ -27,6 +27,7 @@ const EnterMobileNumber = () => {
       if (response.ok) {
         setOtpSent(true);
         alert("OTP sent successfully! Please enter OTP received.");
+        setOtp("");
       } else {
         alert("Failed to send OTP. Please try again.");
       }
