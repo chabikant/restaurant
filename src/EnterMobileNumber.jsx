@@ -41,6 +41,7 @@ const EnterMobileNumber = () => {
     formData.append("phone", mobileNumber);
     formData.append("dial_code", "+91");
     formData.append("otp", otp);
+    
 
     try {
       const response = await fetch(
